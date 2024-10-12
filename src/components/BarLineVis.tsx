@@ -7,17 +7,15 @@ import {
   VisConfig,
   VisData,
 } from "../types";
-import React, { Fragment, useEffect, useMemo, useState } from "react";
+import React, { Fragment, useEffect, useMemo, useState, useRef } from "react";
 
-import * as am4core from "@amcharts/amcharts4/core";
-import * as am4charts from "@amcharts/amcharts4/charts";
+
 import * as am5 from "@amcharts/amcharts5";
 import * as am5xy from "@amcharts/amcharts5/xy";
-import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
-import am4themes_animated from "@amcharts/amcharts4/themes/animated";
-import * as $ from "jquery";
+import { XYChart } from "@amcharts/amcharts5/xy";
 
-import { formatNumber, formatNumber2 } from "../utils";
+import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
+
 import {
   Chart as ChartJS,
   ArcElement,
@@ -367,94 +365,96 @@ function BarLineVis({ data, fields, config, lookerCharts, lookerVis, configOptio
     updateChartData(selectedChartType);
   }, []);
 
-  // chart tooltip
-  const [tooltip, setTooltip] = useState<TooltipData | null>(null);
-
-  const hasPeriodComparisonMeasure = fields.measures.length > 1;
-  const periodComparisonMeasure = fields.measures[1];
 
 
-
-  interface TooltipContext {
-    chart: ChartJS<
-    keyof ChartTypeRegistry,
-    (number | Point | [number, number] | BubbleDataPoint)[],
-    unknown
-    >;
-    tooltip: TooltipModel<"bar" | "scatter">;
-  }
-
-  function tooltipHandler(
-    context: TooltipContext,
-
-
-    setTooltip: (newState: TooltipData | null) => void
-  ) {
-    const isTooltipVisible = context.tooltip.opacity !== 0;
-    if (isTooltipVisible) {
-      const position = context.chart.canvas.getBoundingClientRect();
-
-      const { dataIndex } = context.tooltip.dataPoints[0];
-
-      const lookerRow = data[dataIndex];
-
-      let rows: TooltipRow[] = [];
-
-        Object.entries(lookerRow[measureName]).forEach(
-
-          ([pivotName, { value: currentPeriodValue }], i) => {
-
-            const previousPeriodValue =
-            lookerRow[previousPeriodFieldName][pivotName].value;
-
-            const hasPreviousPeriod =
-            hasPeriodComparisonMeasure && !!previousPeriodValue;
-            const periodComparisonValue =
-            ((currentPeriodValue - previousPeriodValue) /
-            previousPeriodValue) *
-            100;
-
-            rows.push({
-              hasPreviousPeriod,
-
-              measureValue: `${currentPeriodValue}`,
-
-              periodComparisonValue,
-              pivotColor: `#${colors[i]}`,
-              pivotText: pivotName,
-
-
-            });
-
-
-          }
-        );
-
-      setTooltip({
-
-        dimensionLabel0: `${dimensionLabel}:`,
-
-        dimensionLabel: `${context.tooltip.title[0]}`,
-        measureLabel: `${context.tooltip.dataPoints[0].dataset.label}: `,
-
-        left:
-            position.left + window.pageXOffset + context.tooltip.caretX + "px",
-            rows,
-            top:
-              position.top +
-              window.pageYOffset +
-              context.tooltip.caretY -
-              20 +
-              "px",
-            yAlign: context.tooltip.yAlign,
-          });
-
-    } else {
-      setTooltip(null);
-    }
-  }
 
 console.log(data)
+const chartRef = useRef(null);
+
+
+    let data2 = [
+      {
+        category: "Research",
+        value1: 1000,
+        value2: 588
+      },
+      {
+        category: "Marketing",
+        value1: 1200,
+        value2: 1800
+      },
+      {
+        category: "Sales",
+        value1: 850,
+        value2: 1230
+      }
+    ];
+
+useEffect(() => {
+  const root = am5.Root.new("chartdiv");
+  const chart = root.container.children.push(
+    am5xy.XYChart.new(root, {
+      panY: false,
+      layout: root.verticalLayout
+    })
+  );
+
+  root.setThemes([am5themes_Animated.new(root)]);  
+
+  const yAxis = chart.yAxes.push(
+    am5xy.ValueAxis.new(root, {
+      renderer: am5xy.AxisRendererY.new(root, {})
+    })
+  );
+  const xAxis = chart.xAxes.push(
+    am5xy.CategoryAxis.new(root, {
+      renderer: am5xy.AxisRendererX.new(root, {}),
+      categoryField:  
+"category"
+    })
+  );
+  xAxis.data.setAll(data2);  
+
+
+  // Create series
+  const series1 = chart.series.push(
+    am5xy.ColumnSeries.new(root, {
+      name: "Series",
+      xAxis: xAxis,
+      yAxis: yAxis,
+      valueYField: "value1",
+      categoryXField:  
+"category"
+    })
+  );
+  series1.data.setAll(data2);  
+
+
+  const series2 = chart.series.push(
+    am5xy.ColumnSeries.new(root, {
+      name: "Series",
+      xAxis: xAxis,
+      yAxis: yAxis,
+      valueYField: "value2",
+      categoryXField: "category"
+    })
+  );
+  series2.data.setAll(data2);  
+
+  chart.children.push(am5.Legend.new(root, {}));
+  chart.set("cursor", am5xy.XYCursor.new(root, {}));
+
+  chartRef.current = chart;
+
+  return () => {
+    if (chart) {
+      chart.dispose();
+      root.dispose();
+    }
+  };
+}, [data2]);
+
+
 
 
 
@@ -471,7 +471,7 @@ console.log(data)
         </div>
 
 
-    <div id="vis-wrapper" style={{fontFamily: bodyStyle ? bodyStyle : "'Roboto'"}}>
+    <div id="vis-wrapper" style={{height:"2000px !important", fontFamily: bodyStyle ? bodyStyle : "'Roboto'"}}>
 
 
 
@@ -523,7 +523,7 @@ console.log(data)
 
     </div>
 
-
+<div id="chartdiv" ref={chartRef} style={{ width: "100%", height: "1200px" }}></div>
 
     </div>
     </Styles>

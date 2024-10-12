@@ -281,38 +281,6 @@ looker.plugins.visualizations.add({
             },
 
 
-            //
-            // write5: {
-            //    type: "string",
-            //    label: "Override Left Side Value 1 for Effectiveness",
-            //    default: "",
-            //    order: 1,
-            //    section: "Effectiveness",
-            //  },
-            //  dollar2: {
-            //   type: "boolean",
-            //   label: "Add $ Sign Left Side Value 2",
-            //   default: false,
-            //   order: 3,
-            //    section: "Effectiveness",
-            // },
-            // percentSign2: {
-            //   type: "boolean",
-            //   label: "Add % Sign Left Side Value 2",
-            //   default: false,
-            //   order: 4,
-            //  section: "Effectiveness",
-            // },
-            // write7: {
-            //    type: "string",
-            //    label: "Override Left Side Value 3 for Effectiveness",
-            //    default: "",
-            //    order: 6,
-            //    section: "Effectiveness",
-            //  },
-
-
-
 
 
 
