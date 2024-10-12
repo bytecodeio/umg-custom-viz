@@ -5,6 +5,7 @@ $text-color: #ffffff;
 
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:wght@100;300;400;500;700;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,100;1,700&display=swap');
 
 @import url("https://kit-pro.fontawesome.com/releases/v5.15.1/css/pro.min.css");
 
@@ -20,7 +21,7 @@ padding-top: 1em;
 }
 
 #vis {
-    height: 2000px !important;
+    height: 100% !important;
     width: 100% !important;
     margin: 0 !important;
     border: none;
@@ -31,10 +32,46 @@ padding-top: 1em;
 
 .gradient{
   background: linear-gradient(45deg, #4C79FF 0%, #D754FF 100%);
+
     padding: .5em 2em !important;
     font-size: 15px !important;
     border-radius: 2rem !important
 }
+
+.across p{
+  margin:0em 1em
+}
+
+p.purple i{
+    font-size: 16px !important;
+  color:#D754FF !important
+}
+
+
+p.blue i,
+p.blue{
+    font-size: 16px !important;
+  color:#4C79FF !important
+}
+
+span.gray{
+  color:gray !important;
+  font-size: 16px !important
+}
+
+
+span.black{
+  color:black !important;
+  font-size: 18px !important
+}
+ .across img {
+    border-radius: 50%;
+    object-fit: contain;
+    object-position: right center;
+    width: 30px !important;
+    height: 30px !important;
+}
+
 
 // body, html{
 //   font-family: 'Roboto', sans-serif;
@@ -52,17 +89,19 @@ margin:0em 0em;
 }
 
 p{
-  font-weight: 500
+  font-weight: 400 !important;
+
 }
 
 p.large{
   font-size: 22px;
-  margin-top:1em
+  margin-top:.5em
 }
 
 p.small{
   font-size: 12px;
   font-weight: 300;
+  color:black !important
 }
 
 .whiteAcross{
@@ -78,7 +117,7 @@ p.small{
       align-items: center;
       margin: 0em .45em;
       border:1px solid #dedede;
-      max-height: 150px
+      max-height: 140px
 }
 
 .whiteAcross:first-child{
@@ -87,11 +126,16 @@ p.small{
 
   background: #faf5ff;
     max-height: 250px;
-    padding:2em
+    padding:2.75em
 }
 
 .whiteAcross:first-child p{
-font-size: 20px
+font-size: 24px
+}
+
+
+.whiteAcross:first-child p.small{
+  display: none
 }
 
 .whiteAcross p{
@@ -112,6 +156,21 @@ max-height: 498px;
 
 }
 
+.icons i{
+color: black !important;
+font-size: 20px;
+margin:0em .1em;
+padding:.4em
+}
+
+h3{
+  font-weight: 500 !important
+}
+
+.icons i.active{
+  border-radius: 50%;
+  border:2px solid #5D3FD3
+}
 
 .varianceBubble.positive{
   color:black;

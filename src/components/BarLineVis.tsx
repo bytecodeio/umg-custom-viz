@@ -273,7 +273,9 @@ function BarLineVis({ data, fields, config, lookerCharts, lookerVis, configOptio
     efficiency2iya2,
     efficiency3right2,
     efficiency3iya2,
-    leftTitle
+    leftTitle,
+      chooseDimension,
+        yAxisLeftValues2
   } = config;
 
 
@@ -305,90 +307,57 @@ function BarLineVis({ data, fields, config, lookerCharts, lookerVis, configOptio
   const measureLabel = fields.measuresLabel[0];
 
 
-  const [firstData = {}] = data;
-  let cols_to_hide = [];
-
-  for (const [key, value] of Object.entries(firstData)) {
-
-    if (key.split(".")[1] === "count_orders") {
-
-      cols_to_hide = key
-
-    }
-  }
-
-
-  const labels = data.map(
-    (row) => row[dimensionName].rendered ?? row[dimensionName].value ?? "∅"
-  );
-
 
   const colors = config.color_range
 
   const background = config.color_title
 
 
-  const hasPivot = !!fields.pivots && fields.pivots.length > 0;
-
-  const hasNoPivot = !!fields.pivots && fields.pivots.length === 0;
-
-  const fill = showLineChartGradient ? "origin" : false;
-
-  const defaultChartData: ChartData<
-  | "bar"
-  | "line"
-  | "scatter"
-  | "bubble"
-  | "pie"
-  | "doughnut"
-  | "polarArea"
-  | "radar",
-  (number | Point | [number, number] | BubbleDataPoint)[],
-  any
-  > = {
-    labels,
-    datasets: [],
-  };
-  const [chartData, setChartData] = useState(defaultChartData);
-
-  function updateChartData(chartType: ChartType) {
-    let datasets = [];
-    let canvasElement = document.getElementById("chart") as HTMLCanvasElement;
-    if (canvasElement) {
-      const ctx = canvasElement.getContext("2d");
-
-      setChartData({ labels, datasets });
-    }
-  }
-
-  useEffect(() => {
-    updateChartData(selectedChartType);
-  }, []);
 
 
-
-
-console.log(data)
 const chartRef = useRef(null);
 
 
-    let data2 = [
-      {
-        category: "Research",
-        value1: 1000,
-        value2: 588
-      },
-      {
-        category: "Marketing",
-        value1: 1200,
-        value2: 1800
-      },
-      {
-        category: "Sales",
-        value1: 850,
-        value2: 1230
-      }
-    ];
+
+
+
+
+
+
+  const Content = config.yAxisLeftValues.split(",").map((d, i) => ({
+    yAxisLeftValues: d,
+    chooseDimension:config.chooseDimension.split(",")[i],
+    yAxisLeftValues2:config.yAxisLeftValues2.split(",")[i],
+
+    // symbol:config.symbol.split(",")[i],
+    // yAxisLeftValues:config.yAxisLeftValues.split(",")[i],
+
+
+  }))
+
+
+
+
+  const yAxisValues = data.map(item => item[yAxisLeftValues].value)
+
+  const yAxisValues2 = data.map(item => item[yAxisLeftValues2].value)
+
+const xAxisValues = data.map(item => item[chooseDimension].value)
+
+console.log(yAxisValues)
+
+console.log(xAxisValues)
+
+
+const data2 = xAxisValues.map((category, index) => {
+return {
+  category,
+  value1: yAxisValues[index],
+  value2: yAxisValues2[index]
+};
+});
+
+    console.log(data2)
 
 useEffect(() => {
   const root = am5.Root.new("chartdiv");
@@ -462,7 +431,7 @@ useEffect(() => {
     <Fragment>
     <Styles>
 
-      <div className="d-flex flex-column align-items-center mt-1 mb-1">
+      <div className="d-flex flex-column align-items-center mt-1 mb-1" style={{fontFamily: bodyStyle ? bodyStyle : "'Roboto'"}}>
 
         <img style={{width:"60px"}} src="https://ixd-studio.wesdemo.com/idc-preschool/static/media/Collect-data.77f54676.svg"/>
 
@@ -471,6 +440,40 @@ useEffect(() => {
         </div>
 
 
+
+      <div className="d-flex justify-content-center align-items-center across mt-1 mb-1" style={{fontFamily: bodyStyle ? bodyStyle : "'Roboto'"}}>
+{data.slice(0, 1).map((item, i) => (
+<p className="purple"><i class="fal fa-calendar-alt"></i>&nbsp;<span className="gray">Period End Date</span>&nbsp;&nbsp;<span className="black">{item[reach2Right].value}</span></p>
+  ))}
+
+<p className="blue"><i class="fal fa-download"></i>&nbsp;Download</p>
+
+      </div>
+
+      <div className="d-flex justify-content-center align-items-center across mt-2 mb-1" style={{fontFamily: bodyStyle ? bodyStyle : "'Roboto'"}}>
+
+    {data.slice(0, 1).map((item, i) => (
+      <>
+    <div className="d-flex align-items-center">
+    <img src="https://ca.slack-edge.com/E030KNUNZJ6-URACD97SR-b4bfc3bccff1-512"/>
+    <p><span className="black">{item[reachRight].value}</span></p></div>
+
+
+      <p>&nbsp;<span className="gray">Account</span>&nbsp;&nbsp;<span className="black">{item[reach2Left1].value}</span></p>
+
+
+
+        <p>&nbsp;<span className="gray">Payee</span>&nbsp;&nbsp;<span className="black">{item[reach2Left2].value}</span></p>
+
+
+
+              <p>&nbsp;<span className="gray">Vendor</span>&nbsp;&nbsp;<span className="black">{item[reach2Left3].value}</span></p>
+
+</>
+
+  ))}
+      </div>
+
     <div id="vis-wrapper" style={{height:"2000px !important", fontFamily: bodyStyle ? bodyStyle : "'Roboto'"}}>
 
 
@@ -478,7 +481,7 @@ useEffect(() => {
 
     <div className="blueBubble reach" style={{ backgroundColor: color_title ? background[0] : '#fff'}}>
 
-    {data.map((item, i) =>(
+{data.slice(0, 4).map((item, i) => (
 
       <>
 
@@ -486,19 +489,18 @@ useEffect(() => {
       <div className="d-flex flex-column">
 
 
-    <p className="mt-0" style={{color:"black !important"}}>
+    <p className="mt-0 mb-0" style={{color:"black !important"}}>
       {item[reachLeft1].value}
     </p>
 
-      <p className="mb-0 small">
+    <p className="mb-0 mt-0 small">
+    {item[reachLeft3].rendered} of Total Earnings
 
+    </p>
 
-      {item[reachLeft3].value}
-
-      </p>
       <p className="large mb-0">
 
-     {item[reachLeft2].value}
+     {item[reachLeft2].rendered}
       </p>
       </div>
 
@@ -513,17 +515,22 @@ useEffect(() => {
 
     </div>
 
-    <div className="d-flex flex-column align-items-center mt-4 mb-4">
-    <Button className="gradient"><i class="fal fa-filter"></i>&nbsp;Show Filter Options</Button>
+    <div className="d-flex flex-column align-items-center mt-4 mb-4" style={{fontFamily: bodyStyle ? bodyStyle : "'Roboto'"}}>
+    <Button className="gradient" style={{fontFamily: bodyStyle ? bodyStyle : "'Roboto'"}}><i class="fal fa-filter"></i>&nbsp;Show Filter Options</Button>
 
 </div>
 
-    <div className="d-flex justify-content-betweeb align-items-center mt-5 mb-3">
-<h3 style={{color:"black"}}>{leftTitle}</h3>
+    <div className="d-flex justify-content-between align-items-center mt-5 mb-3" style={{fontFamily: bodyStyle ? bodyStyle : "'Roboto'"}}>
+<h3 id="heavy" style={{color:"black", fontWeight: "700 !important"}}>{leftTitle}</h3>
+
+<div className="d-flex justify-content-between icons">
+<i class="fal fa-chart-bar active"></i>
+<i class="fal fa-chart-line"></i>
+</div>
 
     </div>
 
-<div id="chartdiv" ref={chartRef} style={{ width: "100%", height: "1200px" }}></div>
+<div id="chartdiv" ref={chartRef} style={{ width: "100%", height: "900px" }}></div>
 
     </div>
     </Styles>

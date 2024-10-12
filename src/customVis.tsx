@@ -99,186 +99,96 @@ looker.plugins.visualizations.add({
 
 
       reachLeft1: {
-        label: "Choose Label for Reach 1",
+        label: "Choose Label One",
         type: "string",
         display: "select",
-        default: kpiFieldDefault,
+        default: "",
         values: fieldOptions0,
-        section: "Reach",
+        section: "Bubbles",
         order: 0,
       },
 
 
-      reachLeft2: {
-        label: "Choose Value for Reach 1",
+      reachLeft3: {
+        label: "Choose Earnings",
         type: "string",
         display: "select",
-        default: kpiFieldDefault,
+        default: "",
         values: fieldOptions0,
-        section: "Reach",
+          section: "Bubbles",
+        order: 1,
+      },
+
+
+
+      reachLeft2: {
+        label: "Choose Dollar Amount",
+        type: "string",
+        display: "select",
+        default: "",
+        values: fieldOptions0,
+              section: "Bubbles",
         order: 2,
       },
 
 
-      reachLeft3: {
-        label: "Choose Subtitle for Reach 1",
-        type: "string",
-        display: "select",
-        default: kpiFieldDefault,
-        values: fieldOptions0,
-        section: "Reach",
-        order: 5,
-      },
 
 
       reachRight: {
-        label: "Choose Right Side for Reach 1",
+        label: "Choose Account Name",
         type: "string",
         display: "select",
-        default: kpiFieldDefault,
+        default: "",
         values: fieldOptions0,
-        section: "Reach",
-        order: 7,
-      },
-
-      right1: {
-        type: "boolean",
-        label: "% for Reach 1",
-        default: false,
-        order: 8,
-       section: "Reach",
-      },
-
-      iya1: {
-        type: "boolean",
-        label: "IYA for Reach 1",
-        default: false,
-        order: 9,
-       section: "Reach",
+        section: "Account",
+        order: 1,
       },
 
 
 
 
       reach2Left1: {
-        label: "Choose Label for Reach 2",
+        label: "Choose Acccount",
         type: "string",
         display: "select",
-        default: kpiFieldDefault,
-        values: fieldOptions2,
-        section: "Reach",
-        order: 10,
+        default: "",
+      values: fieldOptions0,
+    section: "Account",
+        order: 2,
       },
 
 
       reach2Left2: {
-        label: "Choose Value 2 for Reach 2",
+        label: "Choose Payee",
         type: "string",
         display: "select",
-        default: kpiFieldDefault,
+        default: "",
         values: fieldOptions0,
-        section: "Reach",
-        order: 11,
+        section: "Account",
+        order: 3,
       },
 
 
       reach2Left3: {
-        label: "Choose Subtitle for Reach 2",
+        label: "Choose Vendor",
         type: "string",
         display: "select",
-        default: kpiFieldDefault,
+        default: "",
         values: fieldOptions0,
-        section: "Reach",
+        section: "Account",
         order: 12,
       },
 
 
       reach2Right: {
-        label: "Choose Right Side Value for Reach 2",
+        label: "Choose Date",
         type: "string",
         display: "select",
-        default: kpiFieldDefault,
+        default: "",
         values: fieldOptions0,
-        section: "Reach",
+        section: "Date",
         order: 13,
       },
-
-      reach2right1: {
-        type: "boolean",
-        label: "% for Reach 2",
-        default: false,
-        order: 14,
-       section: "Reach",
-      },
-
-      reach2iya1: {
-        type: "boolean",
-        label: "IYA for Reach 2",
-        default: false,
-        order: 15,
-       section: "Reach",
-      },
-
-
-
-            reach3Left1: {
-              label: "Choose Label for Reach 3",
-              type: "string",
-              display: "select",
-              default: kpiFieldDefault,
-              values: fieldOptions2,
-              section: "Reach",
-              order: 16,
-            },
-
-
-            reach3Left2: {
-              label: "Choose Value 2 for Reach 3",
-              type: "string",
-              display: "select",
-              default: kpiFieldDefault,
-              values: fieldOptions0,
-              section: "Reach",
-              order: 17,
-            },
-
-
-            reach3Left3: {
-              label: "Choose Subtitle for Reach 3",
-              type: "string",
-              display: "select",
-              default: kpiFieldDefault,
-              values: fieldOptions0,
-              section: "Reach",
-              order: 18,
-            },
-
-
-            reach3Right: {
-              label: "Choose Right Side Value for Reach 3",
-              type: "string",
-              display: "select",
-              default: kpiFieldDefault,
-              values: fieldOptions0,
-              section: "Reach",
-              order: 19,
-            },
-
-            reach3right1: {
-              type: "boolean",
-              label: "% for Reach 3",
-              default: false,
-              order: 20,
-             section: "Reach",
-            },
-
-            reach3iya1: {
-              type: "boolean",
-              label: "IYA for Reach 3",
-              default: false,
-              order: 21,
-             section: "Reach",
-            },
 
 
 
@@ -325,11 +235,45 @@ looker.plugins.visualizations.add({
       label: "Choose Left Title",
       type: "string",
       display: "select",
-      default: kpiFieldDefault,
+      default: "",
       values: fieldOptions2,
-      section: "Reach",
-      order: 30,
+      section: "Chart",
+      order: 1,
     },
+
+
+    chooseDimension: {
+      label: "Choose Dimension",
+      type: "string",
+      display: "select",
+      default: "",
+      values: fieldOptions0,
+      section: "Chart",
+      order: 2,
+    },
+
+
+    yAxisLeftValues: {
+      label: "Choose Measure",
+      type: "string",
+      display: "select",
+      default: "",
+      values: fieldOptions0,
+      section: "Chart",
+      order: 3,
+    },
+
+      yAxisLeftValues2: {
+      label: "Choose Measure 2",
+      type: "string",
+      display: "select",
+      default: "",
+      values: fieldOptions0,
+      section: "Chart",
+      order: 4,
+    },
+
+
 
 
 
